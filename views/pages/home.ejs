@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darion - Home</title>
+</head>
+<body>
+    <% if (isAuthenticated) { %>
+        <h2>Hello World <%= displayName %>!</h2>
+        <img src="<%= thumbUrl %>">
+    <% } else { %>
+        <h2>Hello World</h2>
+        <a href="/api/v1/auth/google">Login here</a>
+    <% } %>
+</body>
+</html>
