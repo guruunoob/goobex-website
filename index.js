@@ -148,6 +148,24 @@ server.get("/profile/:username", async (request, response) => {
     }
 });
 
+server.get("/users", async (request, response) => {
+    admin.firestore()
+    .collection("accounts")
+    .get()
+    .then(async snapshot => {
+        let querySnapshot = request.isAuthenticated() ? await accountsCollection.where("email", "==", request.user.email).get() : null;
+
+        let users = snapshot.docs.map(doc => ({
+            username: doc.data().username,
+            displayName: doc.data().displayName,
+            description: doc.data().description,
+            thumbUrl: doc.data().thumbUrl
+        }));
+
+        response.render("pages/users", {isAuthenticated: request.isAuthenticated(), ...request.isAuthenticated() ? querySnapshot.docs[0].data() : null, profiles: users});
+    })
+});
+
 
 // Initialize
 server.listen(8081, () => {
