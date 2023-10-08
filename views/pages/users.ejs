@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/resources/styles/home.css">
+    <link rel="stylesheet" type="text/css" href="/resources/styles/header.css">
+
+    <title>Goobex - Users</title>
+</head>
+<body>
+    <%- include("../partials/header") %>
+    
+    <h2>Baguais registrados:</h2>
+    <% for (let user of profiles) { %>
+        <a href="/profile/<%= user.username %>"><%= user.displayName %>(@<%= user.username %>)<br></a>
+    <% } %>
+
+    <br>
+    <a href="/home">Casa 🏠</a>
+    <a>&nbsp;&nbsp;&nbsp;</a>
+    <a href="/users">Baguais registrados 👥</a>
+</body>
+</html>

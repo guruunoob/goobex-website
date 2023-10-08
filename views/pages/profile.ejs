@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darion - Home</title>
 
-    <style>
+    <link rel="stylesheet" type="text/css" href="/resources/styles/home.css">
+    <link rel="stylesheet" type="text/css" href="/resources/styles/header.css">
+
+    <title>Goobex - <%= profile.displayName %>'s Profile</title>
+
+    <!-- <style>
         body {
             font-family: "Arial", "Helvetica", sans-serif;
         }
-    </style>
+    </style> -->
 </head>
 <body>
-    <h2>This is <%=profile.displayName%>(@<%=profile.username%>)'s profile</h2>
+    <%- include("../partials/header") %>
+    
+    <h2>This is <%= profile.displayName %>(@<%= profile.username %>)'s profile</h2>
     <img src="<%= profile.thumbUrl %>">
-    <h4><%=profile.displayName%> says "<%=profile.description%>"</h4>
+    <h4><%= profile.displayName %> says "<%= profile.description %>"</h4>
+
+    <br>
+    <a href="/home">Casa 🏠</a>
+    <a>&nbsp;&nbsp;&nbsp;</a>
+    <a href="/users">Baguais registrados 👥</a>
 </body>
 </html>

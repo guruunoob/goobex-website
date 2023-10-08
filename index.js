@@ -13,8 +13,7 @@ admin.initializeApp({
 
 // Globals
 const server = express();
-const datatabase = admin.firestore();
-const accountsCollection = datatabase.collection("accounts");
+const accountsCollection = admin.firestore().collection("accounts");
 
 
 // Config
@@ -71,7 +70,7 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 }); 
 
-function isLoggedIn(request, response, next) {
+function checkAuthorization(request, response, next) {
     //request.user ? next() : response.sendStatus(401);
     if (request.isAuthenticated()) {
         next();
@@ -97,17 +96,17 @@ server.get("/api/v1/auth/failure", (request, response) => {
     response.render("pages/loginError");
 });
 
-server.get("/api/v1/protected", isLoggedIn, (request, response) => {
+server.get("/api/v1/protected", checkAuthorization, (request, response) => {
     response.redirect(302, "/home");
 });
 
-server.get("/api/v1/logout", (request, response) => {
+server.get("/api/v1/logout", checkAuthorization, (request, response) => {
     request.logout();
     request.session.destroy();
     response.redirect(302, "/home")
 });
 
-server.get("/api/v1/users", (request, response) => {
+server.get("/api/v1/users", checkAuthorization, (request, response) => {
     admin.firestore()
         .collection("accounts")
         .get()
@@ -118,6 +117,19 @@ server.get("/api/v1/users", (request, response) => {
             }));
 
             response.json(users);
+        });
+});
+
+server.get("/api/v1/account", checkAuthorization, (request, response) => {
+    admin.firestore()
+        .collection("accounts")
+        .where("email", "==", request.user.email)
+        .get()
+        .then(snapshot => {
+            return response.json(snapshot.docs[0].data());
+        })
+        .catch(error => {
+            return error.code;
         });
 });
 
