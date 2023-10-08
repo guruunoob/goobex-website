@@ -8,7 +8,7 @@ header {
     height: 48px;
     margin-bottom: 16px;
 
-    background-color: rgb(63, 59, 102);
+    background-color: #241d44;
 }
 
 header .header-section {
@@ -26,4 +26,10 @@ header #center-side {
 
 header #right-side {
 
+}
+
+#header-logo {
+    width: 38px;
+    height: 38px;
+    margin-left: 16px;
 }
